@@ -65,8 +65,9 @@ static void recycled_cb(void)
 	advertising_start();
 }  
 
-BT_CONN_CB_DEFINE(conn_callbacks) = {
-	.recycled = recycled_cb,
+struct bt_conn_cb conn_callbacks = {
+	.connected = NULL,
+	.disconnected = NULL,
 };
 
 int main(void)
@@ -99,6 +100,8 @@ int main(void)
 		LOG_ERR("Bluetooth init failed (err %d)\n", err);
 		return -1;
 	}
+
+	bt_conn_cb_register(&conn_callbacks);
 
 	LOG_INF("Bluetooth initialized\n");
 	/* STEP 5.3 - Start connectable advertising */
