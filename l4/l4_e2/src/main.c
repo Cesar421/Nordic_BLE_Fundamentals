@@ -97,6 +97,7 @@ static void button_changed(uint32_t button_state, uint32_t has_changed)
 	if (has_changed & USER_BUTTON) {
 		uint32_t user_button_state = button_state & USER_BUTTON;
 		/* STEP 6 - Send indication on a button press */
+		my_lbs_send_button_state_indicate(user_button_state);
 
 		app_button_state = user_button_state ? true : false;
 	}
